@@ -1032,3 +1032,53 @@ body {
   height: 4px;
   border-radius: 2px;
 }
+
+/* Mobile Audio Player Styles */
+@media (max-width: 768px) {
+  .player-controls {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .play-button {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+
+  .progress-container {
+    width: 100%;
+  }
+
+  .volume-container {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .volume-slider {
+    width: 100px;
+  }
+
+  .time-display {
+    font-size: 0.8rem;
+  }
+
+  .music-card {
+    margin: 0.5rem;
+  }
+
+  .music-card-content {
+    padding: 0.75rem;
+  }
+
+  .music-card-title {
+    font-size: 1rem;
+  }
+
+  .music-card-artist {
+    font-size: 0.9rem;
+  }
+}

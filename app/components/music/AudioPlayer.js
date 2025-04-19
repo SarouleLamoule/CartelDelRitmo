@@ -13,11 +13,26 @@ export default function AudioPlayer({ audioUrl }) {
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
   const [isBuffering, setIsBuffering] = useState(false);
-  const previousVolume = useRef(1);
+  const [isMobile, setIsMobile] = useState(false);
+  const previousVolume = useRef(0.5);
   const audioRef = useRef(null);
+
+  // Détecter si l'appareil est mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
 
   // Initialiser la propriété CSS du volume au montage
   useEffect(() => {
@@ -27,7 +42,7 @@ export default function AudioPlayer({ audioUrl }) {
     if (volumeSlider) {
       volumeSlider.style.setProperty("--volume-percentage", `${volume * 100}%`);
     }
-  }, []); // S'exécute uniquement au montage
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -45,6 +60,11 @@ export default function AudioPlayer({ audioUrl }) {
         audioRef.current = new Audio(optimizedUrl);
         audioRef.current.volume = volume;
 
+        // Améliorer la gestion du buffer sur mobile
+        if (isMobile) {
+          audioRef.current.preload = "auto";
+        }
+
         // Configurer les événements
         audioRef.current.addEventListener("timeupdate", updateTime);
         audioRef.current.addEventListener("loadedmetadata", () => {
@@ -53,13 +73,21 @@ export default function AudioPlayer({ audioUrl }) {
         });
         audioRef.current.addEventListener("ended", () => setIsPlaying(false));
 
-        // Gestion du buffering
-        audioRef.current.addEventListener("waiting", () =>
-          setIsBuffering(true)
-        );
-        audioRef.current.addEventListener("canplay", () =>
-          setIsBuffering(false)
-        );
+        // Gestion améliorée du buffering
+        audioRef.current.addEventListener("waiting", () => {
+          setIsBuffering(true);
+          if (isMobile) {
+            // Réduire la qualité sur mobile pendant le buffering
+            audioRef.current.playbackRate = 0.8;
+          }
+        });
+        audioRef.current.addEventListener("canplay", () => {
+          setIsBuffering(false);
+          if (isMobile) {
+            // Restaurer la qualité normale
+            audioRef.current.playbackRate = 1.0;
+          }
+        });
 
         // Attendre que le buffer soit suffisant
         await handleBuffering(audioRef.current);
@@ -83,7 +111,7 @@ export default function AudioPlayer({ audioUrl }) {
         audioRef.current = null;
       }
     };
-  }, [audioUrl]);
+  }, [audioUrl, isMobile]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -244,7 +272,7 @@ export default function AudioPlayer({ audioUrl }) {
           <path
             fillRule="evenodd"
             clipRule="evenodd"
-            d="M17.7571 8.41595C18.0901 8.21871 18.51 8.34663 18.6949 8.70166L18.0921 9.0588C18.6949 8.70166 18.6948 8.70134 18.6949 8.70166L18.6956 8.70295L18.6963 8.70432L18.6978 8.7073L18.7014 8.71428L18.7102 8.73227C18.7169 8.74607 18.7251 8.76348 18.7345 8.78457C18.7533 8.82676 18.7772 8.88363 18.8042 8.95574C18.8584 9.10004 18.9251 9.3049 18.99 9.57476C19.1199 10.115 19.2415 10.9119 19.2415 12.0003C19.2415 13.0888 19.1199 13.8857 18.99 14.4259C18.9251 14.6958 18.8584 14.9007 18.8042 15.045C18.7772 15.1171 18.7533 15.1739 18.7345 15.2161C18.7251 15.2372 18.7169 15.2546 18.7102 15.2684L18.7014 15.2864L18.6978 15.2934L18.6963 15.2964L18.6956 15.2978C18.6954 15.2981 18.6949 15.299 18.0921 14.9419L18.6949 15.299C18.51 15.6541 18.0901 15.782 17.7571 15.5847C17.427 15.3892 17.3063 14.9474 17.4846 14.5938L17.4892 14.5838C17.4955 14.5697 17.5075 14.5415 17.5236 14.4987C17.5557 14.4132 17.6039 14.2688 17.6539 14.0606C17.7539 13.6448 17.8622 12.9709 17.8622 12.0003C17.8622 11.0298 17.7539 10.3559 17.6539 9.94007C17.6039 9.73193 17.5557 9.58748 17.5236 9.50197C17.5075 9.45918 17.4955 9.43102 17.4892 9.41691L17.4846 9.40687C17.3063 9.05332 17.4271 8.61152 17.7571 8.41595Z"
+            d="M17.7571 8.41595C18.0901 8.21871 18.51 8.34663 18.6949 8.70166L18.0921 9.0588C18.6949 8.70166 18.6948 8.70134 18.6949 8.70166L18.6956 8.70295L18.6963 8.70432L18.6978 8.7073L18.7014 8.71428L18.7102 8.73227C18.7169 8.74607 18.7251 8.76348 18.7345 8.78457C18.7533 8.82676 18.7772 8.88363 18.8042 8.95574C18.8584 9.10004 18.9251 9.3049 18.99 9.57476C19.1199 10.115 19.2415 10.9119 19.2415 12.0003C19.2415 13.0888 19.1199 13.8857 18.99 14.4259C18.9251 14.6958 18.8584 14.9007 18.8042 15.045C18.7772 15.1171 18.7533 15.1739 18.7345 15.2161C18.7251 15.2372 18.7169 15.2546 18.7102 15.2684L18.7014 15.2864L18.6978 15.2934L18.6963 15.2964L18.6956 15.2978C18.6954 15.2981 18.6949 15.299 18.0921 14.9419L18.6949 15.299C18.51 15.6541 18.0901 15.782 17.7571 15.5847C17.427 15.3892 17.3063 14.9474 17.4846 14.5938L17.4892 14.5838C17.4955 14.5697 17.5076 14.5415 17.5236 14.4987C17.5557 14.4132 17.6039 14.2688 17.6539 14.0606C17.7539 13.6448 17.8622 12.9709 17.8622 12.0003C17.8622 11.0298 17.7539 10.3559 17.6539 9.94007C17.6039 9.73193 17.5557 9.58748 17.5236 9.50197C17.5076 9.45918 17.4955 9.43102 17.4892 9.41691L17.4846 9.40687C17.3063 9.05332 17.4271 8.61152 17.7571 8.41595Z"
             fill="#F2E1BC"
           />
         </svg>
@@ -306,54 +334,29 @@ export default function AudioPlayer({ audioUrl }) {
     <div className="audio-player">
       <div className="player-controls">
         <button
-          onClick={togglePlay}
-          disabled={isLoading}
           className="play-button"
-          aria-label={
-            isLoading ? "Chargement" : isPlaying ? "Pause" : "Lecture"
-          }
+          onClick={togglePlay}
+          disabled={isLoading || isBuffering}
+          aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isLoading ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6 animate-spin"
-              data-icon="loading"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
-                clipRule="evenodd"
+            <svg data-icon="loading" viewBox="0 0 24 24" width="24" height="24">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
               />
             </svg>
           ) : isPlaying ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-              data-icon="pause"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
-                clipRule="evenodd"
-              />
+            <svg data-icon="pause" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
             </svg>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-              data-icon="play"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                clipRule="evenodd"
-              />
+            <svg data-icon="play" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M8 5v14l11-7z" />
             </svg>
           )}
         </button>
@@ -366,7 +369,7 @@ export default function AudioPlayer({ audioUrl }) {
               max="100"
               value={(currentTime / duration) * 100 || 0}
               onChange={handleSeek}
-              disabled={isLoading}
+              disabled={isLoading || isBuffering}
             />
           </div>
           <div className="time-display">
@@ -377,9 +380,9 @@ export default function AudioPlayer({ audioUrl }) {
 
         <div className="volume-container">
           <button
-            onClick={toggleMute}
             className="volume-button"
-            aria-label={isMuted ? "Activer le son" : "Couper le son"}
+            onClick={toggleMute}
+            aria-label={isMuted ? "Unmute" : "Mute"}
           >
             <VolumeIcon />
           </button>
@@ -391,7 +394,6 @@ export default function AudioPlayer({ audioUrl }) {
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              aria-label="Volume"
             />
           </div>
         </div>
