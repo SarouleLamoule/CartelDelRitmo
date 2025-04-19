@@ -378,25 +378,27 @@ export default function AudioPlayer({ audioUrl }) {
           </div>
         </div>
 
-        <div className="volume-container">
-          <button
-            className="volume-button"
-            onClick={toggleMute}
-            aria-label={isMuted ? "Unmute" : "Mute"}
-          >
-            <VolumeIcon />
-          </button>
-          <div className="volume-slider">
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-            />
+        {!isMobile && (
+          <div className="volume-container">
+            <button
+              className="volume-button"
+              onClick={toggleMute}
+              aria-label={isMuted ? "Unmute" : "Mute"}
+            >
+              <VolumeIcon />
+            </button>
+            <div className="volume-slider">
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
