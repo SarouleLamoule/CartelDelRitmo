@@ -1,0 +1,36 @@
+{
+  "name": "cartel-del-ritmo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SarouleLamoule/CartelDelRitmo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SarouleLamoule/CartelDelRitmo/issues"
+  },
+  "homepage": "https://github.com/SarouleLamoule/CartelDelRitmo#readme",
+  "description": "",
+  "dependencies": {
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.14.1",
+    "@types/react": "19.1.2",
+    "typescript": "5.8.3"
+  }
+}
