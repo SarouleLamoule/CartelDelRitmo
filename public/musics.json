@@ -1,10 +1,34 @@
 [
   {
-    "slug": "ryu-seul",
-    "title": "Seul",
-    "artist": "Ryu",
-    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1744698342/Seul_k3dhx2.wav",
-    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1744699344/seul_izw1bs.png",
-    "date": "2025-04-09"
+    "slug": "flaco-carteldelritmo",
+    "title": "Cartel Del Ritmo",
+    "artist": "Flaco",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1745293121/DJ_FLACO_cartel_del_ritmo_xgm8te.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1745293169/d8aa1484-e2ca-4c78-86e6-2bb96e0a7795.png",
+    "date": "2025-04-20"
+  },
+  {
+    "slug": "maeve-perdue",
+    "title": "Perdue",
+    "artist": "Maeve",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1745294056/Perdue_._cdxzhr.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1745294097/b1ad60c1-c00c-4553-b853-043c2c203357.png",
+    "date": "2025-04-18"
+  },
+  {
+    "slug": "salva-treinta",
+    "title": "Treinta",
+    "artist": "Salva",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1745287046/SALVA_-_TREINTA_uzl0qu.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1745287014/Cover_treinta_-_SALVA_zm7kvj.webp",
+    "date": "2025-04-15"
+  },
+  {
+    "slug": "skudo-v4",
+    "title": "V4",
+    "artist": "S'Kudo",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1745293749/S_kudo_-_V4_mzkilm.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1745293825/Red_Mixtape_Cover_Album_Cover_-_Fait_avec_PosterMyWall_t5jmyx.webp",
+    "date": "2025-04-13"
   }
 ]

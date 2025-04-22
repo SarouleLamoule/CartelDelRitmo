@@ -6,7 +6,7 @@ export default function Catalog() {
     <div className="catalog">
       <div className="catalog-header">
         <h1>Catalogue Musical</h1>
-        <p>Découvrez les dernières productions du Cartel del Ritmo</p>
+        <p>Découvrez toutes les productions du Cartel del Ritmo</p>
       </div>
 
       <div className="catalog-grid">
