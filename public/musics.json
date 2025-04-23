@@ -1,5 +1,13 @@
 [
   {
+    "slug": "salva-caliente",
+    "title": "Caliente",
+    "artist": "Salva",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1745406662/SALVA_-_CALIENTE_NO_FACE_WL_ohpxh1.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1745406695/cceb7d2f-96c1-4757-9757-8566371237c9.png",
+    "date": "2025-04-22"
+  },
+  {
     "slug": "flaco-carteldelritmo",
     "title": "Cartel Del Ritmo",
     "artist": "Flaco",
