@@ -1,5 +1,13 @@
 [
   {
+    "slug": "casa-flaco",
+    "title": "Casa",
+    "artist": "Flaco",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1746145738/DJ_FLACO_casa_nw2sj0.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1746145807/image_w4ejwb.webp",
+    "date": "2025-05-01"
+  },
+  {
     "slug": "salva-caliente",
     "title": "Caliente",
     "artist": "Salva",
