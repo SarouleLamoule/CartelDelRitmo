@@ -1,5 +1,21 @@
 [
   {
+    "slug": "toxicboy-genezio",
+    "title": "Toxic Boy",
+    "artist": "Génézio",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1747354583/G%C3%A9n%C3%A9zio_-_Toxic_Boy_n0hpru.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1747354644/qffqff_oocy6t.png",
+    "date": "2025-05-13"
+  },
+  {
+    "slug": "distance-maeve",
+    "title": "Distance",
+    "artist": "Maeve",
+    "audioUrl": "https://res.cloudinary.com/dvaickjtu/video/upload/v1747354354/Distance._ersacg.wav",
+    "coverUrl": "https://res.cloudinary.com/dvaickjtu/image/upload/v1747354438/qffqff_cnrp32.png",
+    "date": "2025-05-12"
+  },
+  {
     "slug": "casa-flaco",
     "title": "Casa",
     "artist": "Flaco",
